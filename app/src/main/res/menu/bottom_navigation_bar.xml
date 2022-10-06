@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/movies"
+        android:icon="@drawable/ic_baseline_movie_24"
+        android:title="All Movies"
+        app:cnb_iconColor="@color/red"/>
+    <item
+        android:id="@+id/popular"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="Popular"
+        app:cnb_iconColor="@color/green"/>
+    <item
+        android:id="@+id/toprated"
+        android:icon="@drawable/ic_baseline_star_rate_24"
+        android:title="Top Rated"
+        app:cnb_iconColor="@color/blue" />
+    <item
+        android:id="@+id/nowplay"
+        android:icon="@drawable/ic_baseline_moving_24"
+        android:title="Now Play"
+        app:cnb_iconColor="@color/purple" />
+</menu>

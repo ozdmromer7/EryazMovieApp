@@ -1,0 +1,3 @@
+
+rootProject.name = "EryazMovieApp"
+include ':app'
