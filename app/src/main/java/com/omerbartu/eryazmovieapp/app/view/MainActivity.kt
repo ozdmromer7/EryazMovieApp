@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.popular-> changeFragment(PopularFragment())
                 R.id.toprated-> changeFragment(TopRatedFragment())
 
+
                 else ->{
 
 
