@@ -1,13 +1,14 @@
-package com.omerbartu.eryazmovieapp.app.view
+package com.omerbartu.eryazmovieapp.app.service
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavArgs
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.omerbartu.eryazmovieapp.app.util.Constant
 import com.omerbartu.eryazmovieapp.databinding.FragmentMovieDetailsBinding
 
 
@@ -17,7 +18,7 @@ class MovieDetailsFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val args: MovieFragmentArgs by navArgs()
+    private val args: MovieDetailsFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +38,24 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val movie = args.movie
 
-        binding.backButton.setOnClickListener {
+        if (movie != null) {
+            Glide.with(requireContext()).load(Constant.IMAGE_BASE_URL+movie.posterPath).into(binding.imageViewDetails)
+        }
+        if (movie != null) {
+            binding.movieName.text= movie.title
+        }
+        if (movie != null) {
+            binding.overviewText.text=movie.overview
+        }
+        if (movie != null) {
+            binding.voteText.text=movie.voteAverage.toString()+"/10"+" Vote: " +"${movie.voteCount}"
+        }
+        if (movie != null) {
 
-            val action= MovieDetailsFragmentDirections.actionMovieDetailsFragmentToMovieFragment()
-            Navigation.findNavController(it).navigate(action)
+            binding.ratingBar.rating=movie.voteAverage.toFloat()/2
+            binding.ratingBar.isEnabled=false
 
         }
 

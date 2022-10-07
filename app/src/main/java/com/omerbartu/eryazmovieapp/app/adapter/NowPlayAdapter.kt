@@ -9,17 +9,16 @@ import com.omerbartu.eryazmovieapp.app.datamodel.Movie
 import com.omerbartu.eryazmovieapp.app.util.Constant
 import com.omerbartu.eryazmovieapp.databinding.RecyclerRowBinding
 
-class AllMovieAdapter(var movieList:ArrayList<Movie>, var context:Context,val onItemClick: (Movie) -> Unit):RecyclerView.Adapter<AllMovieAdapter.MovieAdapter>() {
 
-    class MovieAdapter(val binding: RecyclerRowBinding):RecyclerView.ViewHolder(binding.root)
+class NowPlayAdapter(val movieList:ArrayList<Movie>,val context:Context,val onItemClick: (Movie) -> Unit):RecyclerView.Adapter<NowPlayAdapter.NowPlayHolder>() {
+    class NowPlayHolder(val binding: RecyclerRowBinding):RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieAdapter {
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayHolder {
         val binding=RecyclerRowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return MovieAdapter(binding)
+        return NowPlayHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MovieAdapter, position: Int) {
+    override fun onBindViewHolder(holder: NowPlayHolder, position: Int) {
 
 
         holder.binding.movieName.text= movieList.get(position).title
@@ -28,21 +27,16 @@ class AllMovieAdapter(var movieList:ArrayList<Movie>, var context:Context,val on
         holder.binding.imageView.setOnClickListener {
             onItemClick(movieList[position])
         }
-
     }
 
     override fun getItemCount(): Int {
-        return movieList.size
-
+       return movieList.count()
     }
-
     fun updateMovieList(list:List<Movie>){
 
         movieList.clear()
         movieList.addAll(list)
         notifyDataSetChanged()
 
-
     }
-
 }

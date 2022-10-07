@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.omerbartu.eryazmovieapp.app.adapter.AllMovieAdapter
 import com.omerbartu.eryazmovieapp.app.adapter.TopRatedAdapter
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
 import com.omerbartu.eryazmovieapp.app.viewmodel.TopRatedViewModel
@@ -45,9 +47,13 @@ class TopRatedFragment : Fragment() {
         observeLiveData()
 
         binding.topRatedRecycler.layoutManager=StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL)
-        adapter=TopRatedAdapter(movieList,requireContext())
-        binding.topRatedRecycler.adapter=adapter
+        adapter= TopRatedAdapter(movieList,requireContext(),onItemClick={
+            val action=TopRatedFragmentDirections.actionTopRatedFragmentToMovieDetailsFragment()
+            action.movie=it
+            Navigation.findNavController(view).navigate(action)
+        })
 
+        binding.topRatedRecycler.adapter=adapter
 
 
     }

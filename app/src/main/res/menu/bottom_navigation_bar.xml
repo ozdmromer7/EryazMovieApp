@@ -6,11 +6,7 @@
         android:icon="@drawable/ic_baseline_movie_24"
         android:title="All Movies"
         app:cnb_iconColor="@color/red"/>
-    <item
-        android:id="@+id/popular"
-        android:icon="@drawable/ic_baseline_favorite_24"
-        android:title="Popular"
-        app:cnb_iconColor="@color/green"/>
+
     <item
         android:id="@+id/toprated"
         android:icon="@drawable/ic_baseline_star_rate_24"

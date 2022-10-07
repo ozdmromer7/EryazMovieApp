@@ -14,5 +14,7 @@ data class Movie(
     @SerializedName("poster_path")
     var posterPath:String,
     @SerializedName("vote_count")
-    var voteCount:Int
+    var voteCount:Int,
+    @SerializedName("overview")
+    var overview:String
 ):java.io.Serializable

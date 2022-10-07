@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.omerbartu.eryazmovieapp.R
 import com.omerbartu.eryazmovieapp.app.datamodel.Model
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
@@ -26,35 +28,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
 
+        var navController=findNavController(R.id.fragmentContainerView2)
+        binding.chipNavigationBar.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener(NavController.OnDestinationChangedListener{controller, destination, arguments ->
 
+            when(destination.id){
 
-        binding.chipNavigationBar.setOnItemSelectedListener {
-
-            when(it){
-                R.id.movies-> changeFragment(MovieFragment())
-                R.id.nowplay-> changeFragment(NowPlayFragment())
-                R.id.popular-> changeFragment(PopularFragment())
-                R.id.toprated-> changeFragment(TopRatedFragment())
-
-
-                else ->{
-
-
-                }
+                R.id.movies -> binding.chipNavigationBar.visibility=View.VISIBLE
+                R.id.toprated -> binding.chipNavigationBar.visibility=View.VISIBLE
+                R.id.nowplay -> binding.chipNavigationBar.visibility=View.VISIBLE
+                else-> binding.chipNavigationBar.visibility=View.GONE
             }
-            return@setOnItemSelectedListener
+        })
+
+
+
+
         }
-
-        }
-
-
-    fun changeFragment(fragment: Fragment){
-
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.linearLayout, fragment)
-        fragmentTransaction.commit()
-
-
-    }
 
 }

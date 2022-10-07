@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.omerbartu.eryazmovieapp.app.datamodel.Model
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
 import com.omerbartu.eryazmovieapp.app.service.RetrofitClient
-import com.omerbartu.eryazmovieapp.app.service.util.Constant
+import com.omerbartu.eryazmovieapp.app.util.Constant
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,15 +21,6 @@ class MovieViewModel:ViewModel() {
     }
 
     fun getDataFromApi(){
-        /*
-        fun market(categoryId: String, tempToken: String): Single<MarketResponseModel> {
-
-
-
-            return marketApiBuild.market(contentTypeHeaderMap, bearerToken)
-        }
-
-         */
 
          val service= RetrofitClient.getData()
 

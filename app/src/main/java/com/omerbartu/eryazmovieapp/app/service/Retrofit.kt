@@ -1,6 +1,6 @@
 package com.omerbartu.eryazmovieapp.app.service
 
-import com.omerbartu.eryazmovieapp.app.service.util.Constant.BASE_URL
+import com.omerbartu.eryazmovieapp.app.util.Constant.BASE_URL
 import retrofit2.converter.gson.GsonConverterFactory
 
 class Retrofit {

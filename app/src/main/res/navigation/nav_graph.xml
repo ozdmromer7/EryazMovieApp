@@ -3,29 +3,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/movieFragment">
+    app:startDestination="@id/movies">
 
     <fragment
-        android:id="@+id/movieFragment"
+        android:id="@+id/movies"
         android:name="com.omerbartu.eryazmovieapp.app.view.MovieFragment"
         android:label="fragment_movie"
         tools:layout="@layout/fragment_movie" >
         <action
             android:id="@+id/action_movieFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
-        <argument
-            android:name="Movie"
-            app:argType="com.omerbartu.eryazmovieapp.app.datamodel.Movie"
-            app:nullable="true"
-            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.omerbartu.eryazmovieapp.app.view.MovieDetailsFragment"
+        android:name="com.omerbartu.eryazmovieapp.app.service.MovieDetailsFragment"
         android:label="fragment_movie_details"
         tools:layout="@layout/fragment_movie_details" >
         <action
             android:id="@+id/action_movieDetailsFragment_to_movieFragment"
-            app:destination="@id/movieFragment" />
+            app:destination="@id/movies" />
+        <argument
+            android:name="movie"
+            app:argType="com.omerbartu.eryazmovieapp.app.datamodel.Movie"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_topRatedFragment"
+            app:destination="@id/toprated" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_nowPlayFragment2"
+            app:destination="@id/nowplay" />
+    </fragment>
+    <fragment
+        android:id="@+id/toprated"
+        android:name="com.omerbartu.eryazmovieapp.app.view.TopRatedFragment"
+        android:label="fragment_top_rated"
+        tools:layout="@layout/fragment_top_rated" >
+        <action
+            android:id="@+id/action_topRatedFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nowplay"
+        android:name="com.omerbartu.eryazmovieapp.app.view.NowPlayFragment"
+        android:label="fragment_now_play"
+        tools:layout="@layout/fragment_now_play" >
+        <action
+            android:id="@+id/action_nowPlayFragment2_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
 </navigation>

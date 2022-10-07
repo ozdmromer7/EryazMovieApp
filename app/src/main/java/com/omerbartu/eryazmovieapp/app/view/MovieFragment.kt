@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -56,14 +57,15 @@ class MovieFragment : Fragment() {
 
         observeLiveData()
 
-        adapter= AllMovieAdapter(movieList,requireContext())
         binding.allMovieRecycler.layoutManager=StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL)
+
+        adapter= AllMovieAdapter(movieList,requireContext(),onItemClick={
+            val action=MovieFragmentDirections.actionMovieFragmentToMovieDetailsFragment()
+            action.movie=it
+            Navigation.findNavController(view).navigate(action)
+        })
+
         binding.allMovieRecycler.adapter=adapter
-
-        binding.moviesToolbar.setNavigationOnClickListener {
-
-        }
-
 
 
 
