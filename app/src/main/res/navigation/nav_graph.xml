@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.omerbartu.eryazmovieapp.app.service.MovieDetailsFragment"
+        android:name="com.omerbartu.eryazmovieapp.app.view.MovieDetailsFragment"
         android:label="fragment_movie_details"
         tools:layout="@layout/fragment_movie_details" >
         <action
