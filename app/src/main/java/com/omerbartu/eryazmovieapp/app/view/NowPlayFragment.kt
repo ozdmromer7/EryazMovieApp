@@ -52,6 +52,7 @@ class NowPlayFragment : Fragment() {
         adapter= NowPlayAdapter(movieList,requireContext(),onItemClick={
             val action=NowPlayFragmentDirections.actionNowPlayFragment2ToMovieDetailsFragment()
             action.movie=it
+            action.direction="3"
             Navigation.findNavController(view).navigate(action)
         })
 
@@ -73,7 +74,5 @@ class NowPlayFragment : Fragment() {
 
         })
     }
-
-
 
 }

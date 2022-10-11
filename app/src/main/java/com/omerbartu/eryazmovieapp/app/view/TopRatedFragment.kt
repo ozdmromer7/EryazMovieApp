@@ -50,6 +50,7 @@ class TopRatedFragment : Fragment() {
         adapter= TopRatedAdapter(movieList,requireContext(),onItemClick={
             val action=TopRatedFragmentDirections.actionTopRatedFragmentToMovieDetailsFragment()
             action.movie=it
+            action.direction="2"
             Navigation.findNavController(view).navigate(action)
         })
 

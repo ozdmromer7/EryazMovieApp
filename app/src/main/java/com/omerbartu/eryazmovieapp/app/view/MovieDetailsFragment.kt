@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.omerbartu.eryazmovieapp.app.util.Constant
@@ -23,6 +26,7 @@ class MovieDetailsFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
 
+
     }
 
     override fun onCreateView(
@@ -36,6 +40,8 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val direction =args.direction
 
         val movie = args.movie
 
@@ -56,6 +62,14 @@ class MovieDetailsFragment : Fragment() {
             binding.ratingBar.rating=movie.voteAverage.toFloat()/2
             binding.ratingBar.isEnabled=false
 
+        }
+        binding.backButton.setOnClickListener {
+
+            when(direction){
+                "1" -> findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentToMovieFragment())
+                "2" -> findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentToTopRatedFragment())
+                "3" -> findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentToNowPlayFragment2())
+            }
         }
 
     }

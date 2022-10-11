@@ -14,11 +14,11 @@
         android:layout_height="wrap_content"
         android:background="@color/red"
         android:minHeight="?attr/actionBarSize"
-        app:navigationIcon="?attr/homeAsUpIndicator"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/search_menu"
         app:title="Movies" />
 
     <androidx.recyclerview.widget.RecyclerView

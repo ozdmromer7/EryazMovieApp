@@ -31,7 +31,6 @@ class MovieViewModel:ViewModel() {
 
                      movies.value=it
 
-
                  }
 
              }
