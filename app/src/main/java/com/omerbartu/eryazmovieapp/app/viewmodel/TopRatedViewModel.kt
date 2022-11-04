@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.omerbartu.eryazmovieapp.app.datamodel.Model
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
-import com.omerbartu.eryazmovieapp.app.service.RetrofitClient
+import com.omerbartu.eryazmovieapp.app.service.Retrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +21,7 @@ class TopRatedViewModel:ViewModel() {
 
     fun getDataFromApi(){
 
-        RetrofitClient.getData().getTopRatedMovie().enqueue(object:Callback<Model>{
+        Retrofit.getData().getTopRatedMovie().enqueue(object:Callback<Model>{
             override fun onResponse(call: Call<Model>, response: Response<Model>) {
 
                 response.body()?.let {

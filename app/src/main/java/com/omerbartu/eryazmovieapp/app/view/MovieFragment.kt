@@ -4,25 +4,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.contains
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.omerbartu.eryazmovieapp.R
 import com.omerbartu.eryazmovieapp.app.adapter.AllMovieAdapter
-import com.omerbartu.eryazmovieapp.app.datamodel.Model
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
-import com.omerbartu.eryazmovieapp.app.service.RetrofitClient
 import com.omerbartu.eryazmovieapp.app.viewmodel.MovieViewModel
 import com.omerbartu.eryazmovieapp.databinding.FragmentMovieBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MovieFragment : Fragment(),SearchView.OnQueryTextListener{
 
@@ -37,16 +28,18 @@ class MovieFragment : Fragment(),SearchView.OnQueryTextListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //(activity as AppCompatActivity?)!!.setSupportActionBar(binding.moviesToolbar as Toolbar?)
+
         viewModel=ViewModelProvider(this).get(MovieViewModel::class.java)
+
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
         val view = binding.root
+        setHasOptionsMenu(true)
         return view
 
     }
@@ -62,7 +55,7 @@ class MovieFragment : Fragment(),SearchView.OnQueryTextListener{
 
         observeLiveData()
 
-        binding.allMovieRecycler.layoutManager=StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL)
+        binding.allMovieRecycler.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
 
         adapter= AllMovieAdapter(movieList,requireContext(),onItemClick={
             val action=MovieFragmentDirections.actionMovieFragmentToMovieDetailsFragment()
@@ -76,13 +69,14 @@ class MovieFragment : Fragment(),SearchView.OnQueryTextListener{
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_menu,menu)
+
+        activity?.menuInflater?.inflate(R.menu.search_menu,menu)
         val item=menu.findItem(R.id.search)
         val searchView=item.actionView as SearchView
         searchView.setOnQueryTextListener(this@MovieFragment)
+
         super.onCreateOptionsMenu(menu, inflater)
     }
-
     fun observeLiveData(){
 
         viewModel.movies.observe(viewLifecycleOwner, Observer {
@@ -93,20 +87,6 @@ class MovieFragment : Fragment(),SearchView.OnQueryTextListener{
 
         })
 
-    }
-
-    override fun onQueryTextSubmit(query: String): Boolean {
-
-        Log.e("text",query)
-        search(query)
-        return true
-    }
-
-    override fun onQueryTextChange(newText: String): Boolean {
-
-        Log.e("text",newText)
-        search(newText)
-        return true
     }
 
     fun search(searchWords:String){
@@ -123,5 +103,21 @@ class MovieFragment : Fragment(),SearchView.OnQueryTextListener{
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            search(query)
+            Log.e("harg",query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if (newText != null) {
+            search(newText)
+            Log.e("harf",newText)
+        }
+        return true
     }
 }

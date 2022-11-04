@@ -4,8 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.omerbartu.eryazmovieapp.app.datamodel.Model
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
-import com.omerbartu.eryazmovieapp.app.service.RetrofitClient
-import com.omerbartu.eryazmovieapp.app.util.Constant
+import com.omerbartu.eryazmovieapp.app.service.Retrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,6 +12,8 @@ import retrofit2.Response
 class MovieViewModel:ViewModel() {
 
     val movies =MutableLiveData<List<Movie>>()
+    val model = MutableLiveData<Model>()
+
 
     fun refreshData(){
 
@@ -22,7 +23,7 @@ class MovieViewModel:ViewModel() {
 
     fun getDataFromApi(){
 
-         val service= RetrofitClient.getData()
+         val service= Retrofit.getData()
 
          service.getMovie().enqueue(object:Callback<Model>{
              override fun onResponse(call: Call<Model>, response: Response<Model>) {
@@ -30,7 +31,8 @@ class MovieViewModel:ViewModel() {
                  response.body()?.results?.let {
 
                      movies.value=it
-
+                     println(model.value?.page.toString())
+                     
                  }
 
              }
@@ -42,9 +44,6 @@ class MovieViewModel:ViewModel() {
 
 
          })
-
-
-
 
     }
 }

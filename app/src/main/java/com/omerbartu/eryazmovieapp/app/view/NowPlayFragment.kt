@@ -48,7 +48,7 @@ class NowPlayFragment : Fragment() {
 
         observeLiveData()
 
-       binding.nowPlayRecycler.layoutManager=StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL)
+       binding.nowPlayRecycler.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
         adapter= NowPlayAdapter(movieList,requireContext(),onItemClick={
             val action=NowPlayFragmentDirections.actionNowPlayFragment2ToMovieDetailsFragment()
             action.movie=it

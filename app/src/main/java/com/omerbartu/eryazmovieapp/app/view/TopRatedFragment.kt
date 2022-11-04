@@ -46,7 +46,7 @@ class TopRatedFragment : Fragment() {
 
         observeLiveData()
 
-        binding.topRatedRecycler.layoutManager=StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL)
+        binding.topRatedRecycler.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
         adapter= TopRatedAdapter(movieList,requireContext(),onItemClick={
             val action=TopRatedFragmentDirections.actionTopRatedFragmentToMovieDetailsFragment()
             action.movie=it
