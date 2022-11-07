@@ -20,8 +20,7 @@ class TopRatedAdapter(val topMovieList:ArrayList<Movie>,val context: Context, va
 
     override fun onBindViewHolder(holder: TopRatedHolder, position: Int) {
 
-        println(topMovieList.get(position).posterPath)
-        holder.binding.movieName.text= topMovieList.get(position).title
+        holder.binding.movieName.text= topMovieList.get(position).title.uppercase()
         Glide.with(context).load(Constant.IMAGE_BASE_URL+topMovieList.get(position).posterPath)
             .into(holder.binding.imageView)
         holder.binding.imageView.setOnClickListener {

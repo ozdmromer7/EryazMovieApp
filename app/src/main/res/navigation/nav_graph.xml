@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/movies">
+    app:startDestination="@id/entryFragment">
 
     <fragment
         android:id="@+id/movies"
@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_movie" >
         <action
             android:id="@+id/action_movieFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment" />
+            app:destination="@id/movieDetailsFragment"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
@@ -46,7 +47,8 @@
         tools:layout="@layout/fragment_top_rated" >
         <action
             android:id="@+id/action_topRatedFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment" />
+            app:destination="@id/movieDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/nowplay"
@@ -55,6 +57,21 @@
         tools:layout="@layout/fragment_now_play" >
         <action
             android:id="@+id/action_nowPlayFragment2_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment" />
+            app:destination="@id/movieDetailsFragment"
+            app:enterAnim="@android:anim/fade_out" />
     </fragment>
+    <fragment
+        android:id="@+id/entryFragment"
+        android:name="com.omerbartu.eryazmovieapp.app.EntryFragment"
+        android:label="fragment_entry"
+        tools:layout="@layout/fragment_entry" >
+        <action
+            android:id="@+id/action_entryFragment_to_movies"
+            app:destination="@id/movies" />
+    </fragment>
+    <fragment
+        android:id="@+id/fav"
+        android:name="com.omerbartu.eryazmovieapp.app.view.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
 </navigation>

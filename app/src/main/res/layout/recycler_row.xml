@@ -14,12 +14,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/gray">
+            android:background="@color/black">
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="400dp"
-                android:layout_height="225dp"
+                android:layout_height="320dp"
                 android:layout_marginTop="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -34,11 +34,25 @@
                 android:text="Transformers 3 Dark Of the Moon"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="15dp"
+                android:textSize="13dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/wishlist_item"
+                android:checked="false"
+                android:text="Add Favorite List"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movieName"
+                app:useMaterialThemeColors="false" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

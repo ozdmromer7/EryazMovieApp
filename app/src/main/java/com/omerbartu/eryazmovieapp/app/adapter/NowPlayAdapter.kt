@@ -21,7 +21,7 @@ class NowPlayAdapter(val movieList:ArrayList<Movie>,val context:Context,val onIt
     override fun onBindViewHolder(holder: NowPlayHolder, position: Int) {
 
 
-        holder.binding.movieName.text= movieList.get(position).title
+        holder.binding.movieName.text= movieList.get(position).title.uppercase()
         Glide.with(context).load(Constant.IMAGE_BASE_URL+movieList.get(position).posterPath)
             .into(holder.binding.imageView)
         holder.binding.imageView.setOnClickListener {
