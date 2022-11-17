@@ -3,8 +3,6 @@ package com.omerbartu.eryazmovieapp.app.view
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -66,6 +64,7 @@ class MovieFragment : Fragment(),AllMovieAdapter.Listener,SearchView.OnQueryText
         })
 
         binding.allMovieRecycler.adapter=adapter
+
 
 
     }
