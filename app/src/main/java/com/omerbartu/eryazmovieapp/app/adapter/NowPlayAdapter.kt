@@ -10,7 +10,7 @@ import com.omerbartu.eryazmovieapp.app.util.Constant
 import com.omerbartu.eryazmovieapp.databinding.RecyclerRowBinding
 
 
-class NowPlayAdapter(val movieList:ArrayList<Movie>,val context:Context,val onItemClick: (Movie) -> Unit):RecyclerView.Adapter<NowPlayAdapter.NowPlayHolder>() {
+class NowPlayAdapter(private val movieList:ArrayList<Movie>, val context:Context, val onItemClick: (Movie) -> Unit):RecyclerView.Adapter<NowPlayAdapter.NowPlayHolder>() {
     class NowPlayHolder(val binding: RecyclerRowBinding):RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayHolder {
@@ -20,9 +20,8 @@ class NowPlayAdapter(val movieList:ArrayList<Movie>,val context:Context,val onIt
 
     override fun onBindViewHolder(holder: NowPlayHolder, position: Int) {
 
-
-        holder.binding.movieName.text= movieList.get(position).title.uppercase()
-        Glide.with(context).load(Constant.IMAGE_BASE_URL+movieList.get(position).posterPath)
+        holder.binding.movieName.text= movieList[position].title.uppercase()
+        Glide.with(context).load(Constant.IMAGE_BASE_URL+ movieList[position].posterPath)
             .into(holder.binding.imageView)
         holder.binding.imageView.setOnClickListener {
             onItemClick(movieList[position])

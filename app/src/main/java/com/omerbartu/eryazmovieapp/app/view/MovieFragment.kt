@@ -1,21 +1,19 @@
 package com.omerbartu.eryazmovieapp.app.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.omerbartu.eryazmovieapp.R
 import com.omerbartu.eryazmovieapp.app.adapter.AllMovieAdapter
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
 import com.omerbartu.eryazmovieapp.app.viewmodel.MovieViewModel
 import com.omerbartu.eryazmovieapp.databinding.FragmentMovieBinding
 
 
-class MovieFragment : Fragment(),AllMovieAdapter.Listener,SearchView.OnQueryTextListener{
+class MovieFragment : Fragment(),AllMovieAdapter.Listener{
 
     private var _binding: FragmentMovieBinding? = null
 
@@ -25,34 +23,34 @@ class MovieFragment : Fragment(),AllMovieAdapter.Listener,SearchView.OnQueryText
     private lateinit var viewModel: MovieViewModel
     private var movieList= arrayListOf<Movie>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
 
-        viewModel=ViewModelProvider(this).get(MovieViewModel::class.java)
-
-
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
-        val view = binding.root
-        setHasOptionsMenu(true)
-        return view
+        return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
 
-        viewModel=ViewModelProvider(this).get(MovieViewModel::class.java)
+        val sp = requireActivity().applicationContext.getSharedPreferences("X",Context.MODE_PRIVATE)
+        val edit = sp.edit()
+        edit.putInt("page",1)
+        edit.apply()
+        var page= sp!!.getInt("page",1)
+        if (page==1){
+            binding.backButtonn.visibility=View.INVISIBLE
+        }
+        viewModel= ViewModelProvider(this)[MovieViewModel::class.java]
 
-
-        viewModel.refreshData()
 
         observeLiveData()
+
+
+        viewModel.refreshData("1")
+
 
         binding.allMovieRecycler.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
 
@@ -65,63 +63,61 @@ class MovieFragment : Fragment(),AllMovieAdapter.Listener,SearchView.OnQueryText
 
         binding.allMovieRecycler.adapter=adapter
 
+        binding.nextButton.setOnClickListener {
 
+            binding.backButtonn.visibility=View.VISIBLE
+            var page= sp!!.getInt("page",1)
+            page++
+            edit.putInt("page",page)
+            edit.apply()
+            observeLiveData()
+            viewModel.refreshData(page.toString())
+
+        }
+        binding.backButtonn.setOnClickListener {
+
+            var page= sp!!.getInt("page",1)
+            page--
+            if (page==1){
+                binding.backButtonn.visibility=View.INVISIBLE
+            }
+            edit.putInt("page",page)
+            edit.apply()
+            observeLiveData()
+            viewModel.refreshData(page.toString())
+
+        }
 
     }
 
-      override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_menu, menu)
-        val searchItem = menu.findItem(R.id.search)
-        val searchView = searchItem.actionView as SearchView?
-        searchView!!.setOnQueryTextListener(this)
-        searchView.queryHint = "Search"
-        super.onCreateOptionsMenu(menu,inflater)
-    }
+    private fun observeLiveData(){
 
-    fun observeLiveData(){
-
-        viewModel.allMovieFromRoom.observe(viewLifecycleOwner, Observer {
+        viewModel.movies.observe(viewLifecycleOwner){
 
             it?.let {
                 adapter.updateMovieList(it)
             }
-
-        })
+        }
     }
-
-    fun search(searchWords:String){
-
-            val searchMovieList: ArrayList<Movie> = ArrayList()
-            viewModel.movies.value?.forEach {  movie->
-                if (movie.title.contains(searchWords)){
-                    searchMovieList.add(movie)
-                }
-            }
-            adapter.updateMovieList(searchMovieList)
-    }
+//    fun search(searchWords:String){
+//
+//            val searchMovieList: ArrayList<Movie> = ArrayList()
+//            viewModel.movies.value?.forEach {  movie->
+//                if (movie.title.contains(searchWords)){
+//                    searchMovieList.add(movie)
+//                }
+//            }
+//            adapter.updateMovieList(searchMovieList)
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-
     override fun onItemClick(movie: Movie) {
 
         viewModel.updateMovie(movie)
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query != null) {
-            search(query)
-        }
-        return true
-    }
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText != null) {
-            search(newText)
-        }
-        return false
-    }
 }

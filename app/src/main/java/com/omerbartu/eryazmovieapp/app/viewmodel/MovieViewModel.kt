@@ -18,11 +18,12 @@ import retrofit2.Response
 
 class MovieViewModel(application: Application) : BaseViewModel(application) {
 
-    val dao = MovieDatabaseRoom.getDatabase(getApplication()).movieDao()
+    private val dao = MovieDatabaseRoom.getDatabase(getApplication()).movieDao()
     val movies = MutableLiveData<List<Movie>>()
     var favoriteMovie: LiveData<List<Movie>>
-    var allMovieFromRoom: LiveData<List<Movie>>
+    private var allMovieFromRoom: LiveData<List<Movie>>
     val videos =MutableLiveData<List<VideoInformation>>()
+    val page = MutableLiveData<Int>()
 
     init {
         favoriteMovie = dao.getFavoriteMovies()
@@ -30,9 +31,10 @@ class MovieViewModel(application: Application) : BaseViewModel(application) {
     }
 
 
-    fun refreshData() {
 
-        getDataFromApi()
+    fun refreshData(pageNum: String) {
+
+        getDataFromApi(pageNum)
 
     }
 
@@ -41,17 +43,22 @@ class MovieViewModel(application: Application) : BaseViewModel(application) {
         favoriteMovie = dao.getFavoriteMovies()
     }
 
-    fun getDataFromApi() {
+    private fun getDataFromApi(pageNum:String) {
 
         val service = Retrofit.getData()
 
-        service.getMovie().enqueue(object : Callback<Model> {
+        service.getMovie(pageNum).enqueue(object : Callback<Model> {
             override fun onResponse(call: Call<Model>, response: Response<Model>) {
 
                 response.body()?.results?.let {
 
                     movies.value = it
                     //storeInRoom(it)
+
+                }
+                response.body()?.page.let {
+
+                    page.value=it!!
 
                 }
 
@@ -82,22 +89,21 @@ class MovieViewModel(application: Application) : BaseViewModel(application) {
 
             }
 
-
         })
     }
 
-    fun storeInRoom(list: List<Movie>) {
-
-        launch {
-            dao.deleteCountry()
-            var listLong = dao.insertAllMovies(*list.toTypedArray())
-            var i = 0
-            while (i < list.size) {
-                list.get(i).id = listLong.get(i).toInt()
-                i++
-            }
-        }
-    }
+//    fun storeInRoom(list: List<Movie>) {
+//
+//        launch {
+//            dao.deleteCountry()
+//            val listLong = dao.insertAllMovies(*list.toTypedArray())
+//            var i = 0
+//            while (i < list.size) {
+//                list[i].id = listLong[i].toInt()
+//                i++
+//            }
+//        }
+//    }
 
     fun updateMovie(movie: Movie) {
         viewModelScope.launch(Dispatchers.IO) {

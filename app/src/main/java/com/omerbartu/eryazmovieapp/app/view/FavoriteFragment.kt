@@ -57,7 +57,7 @@ class FavoriteFragment : Fragment() {
 
     }
 
-    fun observeFavList(){
+    private fun observeFavList(){
 
         viewModel.favoriteMovie.observe(viewLifecycleOwner,Observer{
 

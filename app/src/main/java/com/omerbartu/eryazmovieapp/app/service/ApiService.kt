@@ -7,13 +7,13 @@ import com.omerbartu.eryazmovieapp.app.util.Constant
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 interface ApiService {
 
-
     @GET("3/movie/popular?api_key=${Constant.API_KEY}")
-    fun getMovie() : Call<Model>
+    fun getMovie(@Query("page") page:String) : Call<Model>
 
     @GET("3/movie/top_rated?api_key=${Constant.API_KEY}")
     fun getTopRatedMovie() : Call<Model>

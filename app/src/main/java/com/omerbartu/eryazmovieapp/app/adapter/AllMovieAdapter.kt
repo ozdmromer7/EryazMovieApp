@@ -7,10 +7,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
-import com.omerbartu.eryazmovieapp.app.util.Constant
+import com.omerbartu.eryazmovieapp.app.util.Constant.IMAGE_BASE_URL
 import com.omerbartu.eryazmovieapp.databinding.RecyclerRowBinding
 
-class AllMovieAdapter(var movieList:ArrayList<Movie>,private val listener:Listener, var context:Context,val onItemClick: (Movie) -> Unit):RecyclerView.Adapter<AllMovieAdapter.MovieAdapter>() {
+class AllMovieAdapter(private var movieList:ArrayList<Movie>,private val listener:Listener, private var context:Context,val onItemClick: (Movie) -> Unit):RecyclerView.Adapter<AllMovieAdapter.MovieAdapter>() {
 
     class MovieAdapter(val binding: RecyclerRowBinding):RecyclerView.ViewHolder(binding.root)
 
@@ -22,13 +22,13 @@ class AllMovieAdapter(var movieList:ArrayList<Movie>,private val listener:Listen
 
     override fun onBindViewHolder(holder: MovieAdapter, position: Int) {
 
-        val currentMovie=movieList.get(position)
+        val currentMovie= movieList[position]
 
-        holder.binding.movieName.text= movieList.get(position).title.uppercase()
-        Glide.with(context).load(Constant.IMAGE_BASE_URL+movieList.get(position).posterPath)
+        holder.binding.movieName.text= currentMovie.title.uppercase()
+        Glide.with(context).load(IMAGE_BASE_URL+currentMovie.posterPath)
             .into(holder.binding.imageView)
         holder.binding.imageView.setOnClickListener {
-            onItemClick(movieList[position])
+            onItemClick(currentMovie)
         }
 
         if (currentMovie.isChecked==1){
@@ -62,6 +62,7 @@ class AllMovieAdapter(var movieList:ArrayList<Movie>,private val listener:Listen
         notifyDataSetChanged()
 
     }
+
     interface Listener{
 
         fun onItemClick(movie: Movie)

@@ -9,13 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.omerbartu.eryazmovieapp.R
 import com.omerbartu.eryazmovieapp.app.adapter.NowPlayAdapter
-import com.omerbartu.eryazmovieapp.app.adapter.TopRatedAdapter
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
 import com.omerbartu.eryazmovieapp.app.viewmodel.NowPlayViewModel
 import com.omerbartu.eryazmovieapp.databinding.FragmentNowPlayBinding
-import com.omerbartu.eryazmovieapp.databinding.FragmentTopRatedBinding
 
 class NowPlayFragment : Fragment() {
 
@@ -26,18 +23,12 @@ class NowPlayFragment : Fragment() {
    private val movieList= arrayListOf<Movie>()
     private lateinit var  viewModel:NowPlayViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNowPlayBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

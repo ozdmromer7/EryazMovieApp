@@ -10,7 +10,7 @@ import com.omerbartu.eryazmovieapp.app.util.Constant
 import com.omerbartu.eryazmovieapp.databinding.RecyclerRowBinding
 
 
-class TopRatedAdapter(val topMovieList:ArrayList<Movie>,val context: Context, val onItemClick: (Movie) -> Unit):RecyclerView.Adapter<TopRatedAdapter.TopRatedHolder>(){
+class TopRatedAdapter(private val topMovieList:ArrayList<Movie>, val context: Context, val onItemClick: (Movie) -> Unit):RecyclerView.Adapter<TopRatedAdapter.TopRatedHolder>(){
     class TopRatedHolder(val binding: RecyclerRowBinding):RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopRatedHolder {
@@ -20,11 +20,12 @@ class TopRatedAdapter(val topMovieList:ArrayList<Movie>,val context: Context, va
 
     override fun onBindViewHolder(holder: TopRatedHolder, position: Int) {
 
-        holder.binding.movieName.text= topMovieList.get(position).title.uppercase()
-        Glide.with(context).load(Constant.IMAGE_BASE_URL+topMovieList.get(position).posterPath)
+        val list = topMovieList[position]
+        holder.binding.movieName.text= list.title.uppercase()
+        Glide.with(context).load(Constant.IMAGE_BASE_URL+ list.posterPath)
             .into(holder.binding.imageView)
         holder.binding.imageView.setOnClickListener {
-            onItemClick(topMovieList[position])
+            onItemClick(list)
         }
     }
 

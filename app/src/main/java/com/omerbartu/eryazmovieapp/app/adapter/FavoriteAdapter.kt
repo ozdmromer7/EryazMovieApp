@@ -9,7 +9,7 @@ import com.omerbartu.eryazmovieapp.app.datamodel.Movie
 import com.omerbartu.eryazmovieapp.app.util.Constant
 import com.omerbartu.eryazmovieapp.databinding.RecyclerFavBinding
 
-class FavoriteAdapter(val list: ArrayList<Movie>,val context: Context):RecyclerView.Adapter<FavoriteAdapter.FavHolder>() {
+class FavoriteAdapter(private val favList: ArrayList<Movie>,val context: Context):RecyclerView.Adapter<FavoriteAdapter.FavHolder>() {
     class FavHolder(val binding:RecyclerFavBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavHolder {
@@ -18,19 +18,20 @@ class FavoriteAdapter(val list: ArrayList<Movie>,val context: Context):RecyclerV
     }
 
     override fun onBindViewHolder(holder: FavHolder, position: Int) {
-        holder.binding.textFav.text=list.get(position).title
-        Glide.with(context).load(Constant.IMAGE_BASE_URL + list.get(position).posterPath)
+
+        holder.binding.textFav.text= favList[position].title
+        Glide.with(context).load(Constant.IMAGE_BASE_URL + favList[position].posterPath)
             .into(holder.binding.favImage)
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return favList.size
     }
 
-    fun updateMovieList(list1:List<Movie>){
+    fun updateMovieList(list:List<Movie>){
 
-        list.clear()
-        list.addAll(list1)
+        favList.clear()
+        favList.addAll(list)
         notifyDataSetChanged()
 
     }
