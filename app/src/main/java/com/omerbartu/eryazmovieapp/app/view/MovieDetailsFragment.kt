@@ -15,14 +15,18 @@ import com.omerbartu.eryazmovieapp.app.util.Constant.IMAGE_BASE_URL
 import com.omerbartu.eryazmovieapp.app.util.Constant.YOUTUBE_API_KEY
 import com.omerbartu.eryazmovieapp.app.viewmodel.MovieViewModel
 import com.omerbartu.eryazmovieapp.databinding.FragmentMovieDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
 
-    private var _binding: FragmentMovieDetailsBinding?= null
+    private var _binding: FragmentMovieDetailsBinding? = null
 
     private val binding get() = _binding!!
-    private lateinit var viewModel: MovieViewModel
+
+    @Inject
+    lateinit var viewModel: MovieViewModel
 
     private val args: MovieDetailsFragmentArgs by navArgs()
 
@@ -37,10 +41,8 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel= ViewModelProvider(this)[MovieViewModel::class.java]
 
-
-        val direction =args.direction
+        val direction = args.direction
 
         val movie = args.movie
 
@@ -49,26 +51,28 @@ class MovieDetailsFragment : Fragment() {
         }
 
         if (movie != null) {
-            Glide.with(requireContext()).load(IMAGE_BASE_URL+movie.posterPath).into(binding.imageViewDetails)
+            Glide.with(requireContext()).load(IMAGE_BASE_URL + movie.posterPath)
+                .into(binding.imageViewDetails)
         }
         if (movie != null) {
-            binding.movieName.text= movie.title
+            binding.movieName.text = movie.title
         }
         if (movie != null) {
-            binding.overviewText.text=movie.overview
+            binding.overviewText.text = movie.overview
         }
         if (movie != null) {
-            binding.voteText.text=movie.voteAverage.toString()+"/10"+" Vote: " +"${movie.voteCount}"
+            binding.voteText.text =
+                movie.voteAverage.toString() + "/10" + " Vote: " + "${movie.voteCount}"
         }
         if (movie != null) {
 
-            binding.ratingBar.rating=movie.voteAverage.toFloat()/2
-            binding.ratingBar.isEnabled=false
+            binding.ratingBar.rating = movie.voteAverage.toFloat() / 2
+            binding.ratingBar.isEnabled = false
 
         }
         binding.backButton.setOnClickListener {
 
-            when(direction){
+            when (direction) {
                 "1" -> findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentToMovieFragment())
                 "2" -> findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentToTopRatedFragment())
                 "3" -> findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentToNowPlayFragment2())
@@ -82,7 +86,7 @@ class MovieDetailsFragment : Fragment() {
                 binding.constraint.setOnClickListener {
 
                     val intent = YouTubeStandalonePlayer.createVideoIntent(
-                        requireContext() as Activity?,
+                        requireActivity(),
                         YOUTUBE_API_KEY,
                         list[0].key
                     )
@@ -91,7 +95,7 @@ class MovieDetailsFragment : Fragment() {
                 binding.imageView3.setOnClickListener {
 
                     val intent = YouTubeStandalonePlayer.createVideoIntent(
-                        requireContext() as Activity?,
+                        requireActivity(),
                         YOUTUBE_API_KEY,
                         list[0].key
                     )

@@ -13,15 +13,20 @@ import com.omerbartu.eryazmovieapp.app.adapter.NowPlayAdapter
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
 import com.omerbartu.eryazmovieapp.app.viewmodel.NowPlayViewModel
 import com.omerbartu.eryazmovieapp.databinding.FragmentNowPlayBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NowPlayFragment : Fragment() {
 
     private var _binding: FragmentNowPlayBinding? = null
     private val binding get() = _binding!!
 
-   private lateinit var adapter:NowPlayAdapter
-   private val movieList= arrayListOf<Movie>()
-    private lateinit var  viewModel:NowPlayViewModel
+    private lateinit var adapter: NowPlayAdapter
+    private val movieList = arrayListOf<Movie>()
+
+    @Inject
+    lateinit var viewModel: NowPlayViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,25 +39,25 @@ class NowPlayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel=ViewModelProvider(this).get(NowPlayViewModel::class.java)
         viewModel.refreshData()
 
         observeLiveData()
 
-       binding.nowPlayRecycler.layoutManager=StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        adapter= NowPlayAdapter(movieList,requireContext(),onItemClick={
-            val action=NowPlayFragmentDirections.actionNowPlayFragment2ToMovieDetailsFragment()
-            action.movie=it
-            action.direction="3"
+        binding.nowPlayRecycler.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        adapter = NowPlayAdapter(movieList, requireContext(), onItemClick = {
+            val action = NowPlayFragmentDirections.actionNowPlayFragment2ToMovieDetailsFragment()
+            action.movie = it
+            action.direction = "3"
             Navigation.findNavController(view).navigate(action)
         })
 
-        binding.nowPlayRecycler.adapter=adapter
+        binding.nowPlayRecycler.adapter = adapter
 
 
     }
 
-    fun observeLiveData(){
+    fun observeLiveData() {
 
         viewModel.movies.observe(viewLifecycleOwner, Observer {
 

@@ -4,12 +4,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.omerbartu.eryazmovieapp.app.datamodel.Model
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
-import com.omerbartu.eryazmovieapp.app.service.Retrofit
+import com.omerbartu.eryazmovieapp.app.service.ApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class NowPlayViewModel:ViewModel() {
+class NowPlayViewModel @Inject constructor(private val apiService: ApiService):ViewModel() {
 
      val movies=MutableLiveData<List<Movie>>()
 
@@ -17,11 +18,11 @@ class NowPlayViewModel:ViewModel() {
 
         getDataFromApi()
     }
-    fun getDataFromApi(){
+    private fun getDataFromApi(){
 
-        val service= Retrofit.getData()
+        val service= apiService.getNowPlayingMovie()
 
-        service.getNowPlayingMovie().enqueue(object: Callback<Model> {
+        service.enqueue(object: Callback<Model> {
             override fun onResponse(call: Call<Model>, response: Response<Model>) {
 
                 response.body()?.results?.let {

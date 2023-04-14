@@ -8,28 +8,32 @@ import com.omerbartu.eryazmovieapp.app.datamodel.Model
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
 import com.omerbartu.eryazmovieapp.app.datamodel.Video
 import com.omerbartu.eryazmovieapp.app.datamodel.VideoInformation
+import com.omerbartu.eryazmovieapp.app.service.ApiService
 import com.omerbartu.eryazmovieapp.app.service.MovieDatabaseRoom
-import com.omerbartu.eryazmovieapp.app.service.Retrofit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class MovieViewModel(application: Application) : BaseViewModel(application) {
+
+class MovieViewModel @Inject constructor(
+    private val apiService: ApiService,
+    application: Application
+) : BaseViewModel(application) {
 
     private val dao = MovieDatabaseRoom.getDatabase(getApplication()).movieDao()
     val movies = MutableLiveData<List<Movie>>()
     var favoriteMovie: LiveData<List<Movie>>
     private var allMovieFromRoom: LiveData<List<Movie>>
-    val videos =MutableLiveData<List<VideoInformation>>()
+    val videos = MutableLiveData<List<VideoInformation>>()
     val page = MutableLiveData<Int>()
 
     init {
         favoriteMovie = dao.getFavoriteMovies()
         allMovieFromRoom = dao.getAllMovie()
     }
-
 
 
     fun refreshData(pageNum: String) {
@@ -43,11 +47,11 @@ class MovieViewModel(application: Application) : BaseViewModel(application) {
         favoriteMovie = dao.getFavoriteMovies()
     }
 
-    private fun getDataFromApi(pageNum:String) {
+    private fun getDataFromApi(pageNum: String) {
 
-        val service = Retrofit.getData()
+        val service = apiService.getMovie(pageNum)
 
-        service.getMovie(pageNum).enqueue(object : Callback<Model> {
+        service.enqueue(object : Callback<Model> {
             override fun onResponse(call: Call<Model>, response: Response<Model>) {
 
                 response.body()?.results?.let {
@@ -58,7 +62,7 @@ class MovieViewModel(application: Application) : BaseViewModel(application) {
                 }
                 response.body()?.page.let {
 
-                    page.value=it!!
+                    page.value = it!!
 
                 }
 
@@ -73,19 +77,18 @@ class MovieViewModel(application: Application) : BaseViewModel(application) {
         })
     }
 
-    fun getVideo(movieId :Int){
+    fun getVideo(movieId: Int) {
 
-        val service =Retrofit.getData()
-        service.getVideo(movieId).enqueue(object: Callback<Video>{
+        val service = apiService.getVideo(movieId)
+        service.enqueue(object : Callback<Video> {
             override fun onResponse(call: Call<Video>, response: Response<Video>) {
 
                 response.body()?.results?.let {
-                    videos.value=it
+                    videos.value = it
                 }
             }
 
             override fun onFailure(call: Call<Video>, t: Throwable) {
-
 
             }
 

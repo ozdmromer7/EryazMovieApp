@@ -17,22 +17,26 @@ import com.omerbartu.eryazmovieapp.app.datamodel.Movie
 import com.omerbartu.eryazmovieapp.app.viewmodel.MovieViewModel
 import com.omerbartu.eryazmovieapp.databinding.FragmentFavoriteBinding
 import com.omerbartu.eryazmovieapp.databinding.FragmentMovieBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var adapter: FavoriteAdapter
-    private lateinit var viewModel: MovieViewModel
+
+    @Inject
+    lateinit var viewModel: MovieViewModel
     private var movieList= arrayListOf<Movie>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel= ViewModelProvider(this).get(MovieViewModel::class.java)
 
     }
 

@@ -11,8 +11,10 @@ import com.omerbartu.eryazmovieapp.app.adapter.AllMovieAdapter
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
 import com.omerbartu.eryazmovieapp.app.viewmodel.MovieViewModel
 import com.omerbartu.eryazmovieapp.databinding.FragmentMovieBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class MovieFragment : Fragment(),AllMovieAdapter.Listener{
 
     private var _binding: FragmentMovieBinding? = null
@@ -20,7 +22,8 @@ class MovieFragment : Fragment(),AllMovieAdapter.Listener{
     private val binding get() = _binding!!
 
     private lateinit var adapter: AllMovieAdapter
-    private lateinit var viewModel: MovieViewModel
+    @Inject
+    lateinit var viewModel: MovieViewModel
     private var movieList= arrayListOf<Movie>()
 
 
@@ -43,8 +46,6 @@ class MovieFragment : Fragment(),AllMovieAdapter.Listener{
         if (page==1){
             binding.backButtonn.visibility=View.INVISIBLE
         }
-        viewModel= ViewModelProvider(this)[MovieViewModel::class.java]
-
 
         observeLiveData()
 

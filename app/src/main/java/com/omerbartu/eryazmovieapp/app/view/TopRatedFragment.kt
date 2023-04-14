@@ -7,20 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.omerbartu.eryazmovieapp.app.adapter.AllMovieAdapter
 import com.omerbartu.eryazmovieapp.app.adapter.TopRatedAdapter
 import com.omerbartu.eryazmovieapp.app.datamodel.Movie
 import com.omerbartu.eryazmovieapp.app.viewmodel.TopRatedViewModel
 import com.omerbartu.eryazmovieapp.databinding.FragmentTopRatedBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TopRatedFragment : Fragment() {
 
     private var _binding: FragmentTopRatedBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel:TopRatedViewModel
+    @Inject
+    lateinit var viewModel:TopRatedViewModel
     private var movieList= arrayListOf<Movie>()
     private lateinit var adapter:TopRatedAdapter
 
@@ -41,7 +43,6 @@ class TopRatedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel=ViewModelProvider(this).get(TopRatedViewModel::class.java)
         viewModel.refreshData()
 
         observeLiveData()
