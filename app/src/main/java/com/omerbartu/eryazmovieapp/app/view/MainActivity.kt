@@ -1,5 +1,6 @@
 package com.omerbartu.eryazmovieapp.app.view
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -44,6 +45,5 @@ class MainActivity : AppCompatActivity(){
 
 
         }
-
 
 }

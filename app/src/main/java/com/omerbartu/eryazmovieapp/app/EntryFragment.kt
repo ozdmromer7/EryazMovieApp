@@ -1,5 +1,6 @@
 package com.omerbartu.eryazmovieapp.app
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -23,6 +24,9 @@ class EntryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view= inflater.inflate(R.layout.fragment_entry, container, false)
+
+        val sp = requireActivity().applicationContext.getSharedPreferences("X", Context.MODE_PRIVATE)
+        sp.edit().clear().apply()
 
         Handler(Looper.getMainLooper()).postDelayed({
 

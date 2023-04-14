@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -73,7 +74,11 @@ class MovieDetailsFragment : Fragment() {
         binding.backButton.setOnClickListener {
 
             when (direction) {
-                "1" -> findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentToMovieFragment())
+                "1" -> {
+                    val action =MovieDetailsFragmentDirections.actionMovieDetailsFragmentToMovieFragment()
+                    action.comeFromDetails=true
+                    Navigation.findNavController(it).navigate(action)
+                }
                 "2" -> findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentToTopRatedFragment())
                 "3" -> findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentToNowPlayFragment2())
             }

@@ -14,6 +14,10 @@
             android:id="@+id/action_movieFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment"
             app:enterAnim="@android:anim/fade_in" />
+        <argument
+            android:name="comeFromDetails"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
